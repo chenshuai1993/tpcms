@@ -1,0 +1,152 @@
+<link rel="stylesheet" href="__LAYUI__/css/layui.css">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="__LAYUI__/layui.js"></script>
+
+<!--table-->
+<div id="table" lay-filter="table"></div>
+
+
+<!--工具条-->
+<script type="text/html" id="blogTool">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <!-- 这里同样支持 laytpl 语法，如： -->
+    {{#  if(d.static == '未审核'){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+    {{#  } }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!--工具条-->
+
+
+
+
+<script>
+    layui.use(['layer', 'form','element','laypage','table'], function() {
+        var layer = layui.layer
+            ,form = layui.form
+            ,laypage = layui.laypage
+            ,table = layui.table
+            ,element = layui.element;
+
+        table.render({
+            id:'table',
+            elem: '#table'
+            ,url:'/ping/blog/getBlogList'
+            ,limit:25
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 5 //只显示 1 个连续页码
+                ,first: true //不显示首页
+                ,last: true //不显示尾页
+            }
+            ,cols: [[
+                {field:'id', width:80, title: 'ID', sort: true, fixed: 'left'}
+                ,{field:'title', width:'50%', title: '标题'}
+                ,{field:'cateid', width:'100', title: '栏目名称'}
+                ,{field:'tags', width:'200', title: '标签'}
+                ,{field:'type', width:100, title: '文章类型'}
+                ,{field:'readed_sum', width:100, title: '阅读量'}
+                ,{field:'static', width:80, title: '状态'}
+                ,{fixed: 'right', width:150, align:'center', toolbar: '#blogTool'} //这里的toolbar值是模板元素的选择器
+            ]]
+
+        });
+
+
+        //监听工具条
+        table.on('tool(table)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            //var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            var id = data.id;
+            var title = data.title;
+
+            if(layEvent === 'detail'){ //查看
+                //do somehing
+                //查看
+                layer.open({
+                    type: 2,
+                    title: '查看博客',
+                    shade: 0.8,
+                    area : [ '100%', '100%' ],
+                    maxmin: true,
+                    boolean : true,
+                    scrollbar:false,
+                    content: ['/ping/blog/details?id='+id,'no']
+                });
+            } else if(layEvent === 'del'){ //删除
+                layer.confirm('删除:'+title, function(index){
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    //ajax
+                    $.ajax({
+                        type:'post',
+                        url:'/ping/blog/delete',
+                        dataType:'json',
+                        data:{id:id},
+                        success: function(result){
+                            if(result.code == 200){
+                                layer.msg(result.message,{time:1000},function(){
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                });
+                            }else{
+                                layer.msg(result.message);
+                            }
+
+                        }
+                    });
+                });
+            } else if(layEvent === 'check'){ //审核
+
+                layer.confirm('审核:'+title, function(index){
+                    layer.close(index);
+                    //向服务端发送审核指令
+                    //ajax
+                    console.log('ajax...');
+                    $.ajax({
+                        type:'post',
+                        url:'/ping/blog/check',
+                        dataType:'json',
+                        data:{id:id},
+                        success: function(result){
+                            if(result.code == 200){
+                                layer.msg(result.message,{time:1000},function(){
+                                    //同步更新缓存对应的值
+                                    obj.update({
+                                        static: '审核'
+                                    });
+                                });
+                            }else{
+                                layer.msg(result.message);
+                            }
+                        }
+                    });
+                });
+            } else if(layEvent === 'edit'){ //编辑
+                //do something
+
+                var edit_index = layer.open({
+                    type: 2,
+                    title: '编辑博客',
+                    shade: 0.8,
+                    area : [ '100%', '100%' ],
+                    maxmin: true,
+                    boolean : true,
+                    scrollbar:false,
+                    content: ['/ping/blog/edit?id='+id,'no']
+                });
+
+                //存入edit_index
+                window.sessionStorage.setItem("edit_index",edit_index);
+            }
+        });
+
+
+
+
+    });
+</script>
+

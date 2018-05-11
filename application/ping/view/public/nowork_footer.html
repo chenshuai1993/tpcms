@@ -1,0 +1,51 @@
+<script>
+    layui.config({
+        base: '/static/js/' //静态资源所在路径
+    }).extend({
+        index: 'lib/ping' //主入口模块
+    }).use(['layer'], function(){
+        var $ = layui.$;
+        var layer = layui.layer;
+
+
+        //登录
+        $(document).on('click','#submit',function () {
+
+            var url = '/ping/Publics/login';
+
+            var data = {
+                username: $('#username').val() || '',
+                password: $('#password').val() || '',
+                vercode: $('#vercode').val() || '',
+            }
+
+            $.ajax({type:'post',url:url,dataType:'json',
+                data:data,
+                success: function(result){
+                    if(result.code == '500'){
+                       layer.msg(result.message);
+                    }else if(result.code == '200'){
+                        window.location.href='/ping/index/index'
+                    }
+                }
+            });
+
+        })
+
+        //切换验证码
+        $(document).on('click','#vercode-img',function () {
+            $(this).attr('src',$(this).attr('src'));
+        })
+
+
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>陈帅同学</title>
+    <meta name="keywords" content="陈帅同学"/>
+    <meta name="description" content="陈帅同学"/>
+    <link href="__STATIC__/qixi/css/default.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+    <script type="text/javascript" src="__STATIC__/qixi/js/garden.js"></script>
+    <script type="text/javascript" src="__STATIC__/qixi/js/functions.js"></script>
+</head>
+
+<body>
+
+<div id="mainDiv">
+    <div id="content">
+        <audio autoplay="autopaly" loop="loop">
+            <source src="__STATIC__/qixi/如果我爱你.mp3" type="audio/mp3" />
+        </audio>
+        <div id="code">
+            <span class="comments">/**</span><br />
+            <span class="space"/><span class="comments">*2015—08-11</span><br />
+            <span class="space"/><span class="comments">*2017-08-28</span><br />
+            <span class="space"/><span class="comments">*author:chenshuai</span><br />
+            <span class="space"/><span class="comments">*/</span><br />
+            Boy name = <span class="keyword">Mr</span> shuaishuai.chen<br />
+            Girl name = <span class="keyword">Mrs</span> xueping.liu<br />
+            <span class="comments">// 给小刘同学的一封信.</span><br />
+            于千万人之中遇见你所要遇见的人,<br />
+            <span class="comments">// 如</span><br />
+            于千万年之中,<br />
+            <span class="comments">// 果</span><br />
+            时间的无涯的荒野里,<br />
+            <span class="comments">// 我</span><br />
+            没有早一步,<br />
+            <span class="comments">// 爱</span><br />
+            也没有晚一步,<br />
+            <span class="comments">// 你</span><br />
+            刚巧赶上了,<br />
+            <span class="comments">// ,</span><br />
+            那也没有别的话可说,<br />
+            <span class="comments">// 那么.</span><br />
+            惟有轻轻地问一声:<br />
+            <span class="comments">// 我天天给你做好吃的 :)</span><br />
+            "噢，你在这里等陈帅同学吗？:)"<br />
+            <br>
+            <br>
+            I want to say:<br />
+            Baby, Shall I compare you to a spring day;<br />
+
+
+        </div>
+        <div id="loveHeart">
+            <canvas id="garden"></canvas>
+            <div id="words">
+                <div id="messages">
+                    亲爱的，这是我们相爱在一起的时光。
+                    <div id="elapseClock"></div>
+                </div>
+                <div id="loveu">
+                    爱你直到永永远远。<br/>
+                    <div class="signature">- 爱你的陈帅同学</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="copyright">
+        <a href="#">@陈帅同学版权所有</a><br />
+    </div>
+</div>
+
+<script type="text/javascript">
+    var offsetX = $("#loveHeart").width() / 2;
+    var offsetY = $("#loveHeart").height() / 2 - 55;
+    var together = new Date();
+    var together = new Date('2015/08/11');
+
+    if (!document.createElement('canvas').getContext) {
+        var msg = document.createElement("div");
+        msg.id = "errorMsg";
+        msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
+        document.body.appendChild(msg);
+        $("#code").css("display", "none")
+        $("#copyright").css("position", "absolute");
+        $("#copyright").css("bottom", "10px");
+        document.execCommand("stop");
+    } else {
+        setTimeout(function () {
+            startHeartAnimation();
+        }, 5000);
+        timeElapse(together);
+        setInterval(function () {
+            timeElapse(together);
+        }, 500);
+
+        adjustCodePosition();
+        $("#code").typewriter();
+    }
+</script>
+
+</body>
+</html>

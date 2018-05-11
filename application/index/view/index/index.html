@@ -1,0 +1,43 @@
+    <!--左右分块 左边8 右边4-->
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 c-content-left">
+
+            {volist name="blogList" id="vo"}
+                <article class="excerpt excerpt-round-1">
+                    <div class="col-lg-2 col-md-2 col-xs-4">
+                        <a class="" href="{:url('/blog/'.$vo.id)}">
+                            <img data-thumb="default" src="__UPLOADS__/{$vo.img}" class="thumb img-responsive img-thumbnail" alt="{$vo.cateid}" />
+                        </a>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-xs-8">
+                        <header>
+                            <a class="cat" href="javascript:;">{$vo.catename}<i></i></a>
+                            <h2><a href="{:url('/blog/'.$vo.id)}" title="{$vo.title}">{$vo.title}</a></h2>
+                        </header>
+                        <p class="meta">
+                            <span class="author"><i class="fa fa-bullhorn"></i>{eq name="vo.type" value="1"}:原{else/}:转{/eq}</span>
+                            <time><i class="fa fa-clock-o"></i>{$vo.time}</time>
+                            <span class="author"><i class="fa fa-user"></i>陈帅帅</span>
+                            <span class="pv"><i class="fa fa-eye"></i>阅读({$vo.readed_sum})</span>
+                            <!--<a class="pc" href="{:url('/blog/'.$vo.id)}"><i class="fa fa-comments-o"></i>评论({$vo.comment_sum})</a>-->
+                        </p>
+                    </div>
+
+
+
+                </article>
+            {/volist}
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+                {$blogList->render()}
+            </div>
+        </div>
+
+
+        <!--共用的模块-->
+        {include file="publics/right" /}
+        <!--共用的模块-->
+    </div>
+    <!--左右分块 左边8 右边4-->
+</div>

@@ -1,0 +1,49 @@
+<!--footer start-->
+<footer class="blog-footer">
+    <p>{$seoInfo.web_foot}</p>
+</footer>
+<!--footer end-->
+
+<div id="gotoTop"></div>
+
+
+
+
+<script src="__STATIC__/js/index/main.js"></script>
+</body>
+</html>
+
+<script>
+    $(function(){
+
+
+        var init = {
+            nav:function(){
+                var cur = '{$cur}';
+                $('#navbar li[nav-id="'+cur+'"]').addClass('active');
+            },
+            toTop:function(){
+
+                $(document).on('click','#gotoTop',function () {
+                    $('html,body').animate({scrollTop:0},700);
+                });
+                $(document).on('scroll',function () {
+                   var top_ = $(document).scrollTop();
+                   if(top_ >200){
+                      $('#gotoTop').show('slow');
+                   }else{
+                       $('#gotoTop').hide('slow');
+                   }
+                })
+            }
+        }
+
+
+        //导航
+        init.nav();
+
+        //gotop
+        init.toTop();
+
+    });
+</script>

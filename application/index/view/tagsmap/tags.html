@@ -1,0 +1,43 @@
+<!--左右分块 左边8 右边4-->
+<div class="row">
+    <div class="col-lg-8 c-content-left">
+
+        <div class="pagetitle">
+            <h1><i class="glyphicon glyphicon-tasks"></i>&nbsp;标签:{$tagsname}</h1>
+        </div>
+
+
+
+        {volist name="blogListPage" id="vo"}
+
+            <article class="excerpt excerpt-round-1">
+                <a class="focus" href="{:url('/blog/'.$vo.id)}">
+                    <img data-thumb="default" src="__UPLOADS__/{$vo.img}" class="thumb" alt="{$vo.cateid}" />
+                </a>
+                <header>
+                    <a class="cat" href="http://www.daqianduan.com/front/javascript">{$tagsname}<i></i></a>
+                    <h2><a href="{:url('/blog/'.$vo.id)}" title="{$vo.title}">{$vo.title}</a></h2>
+                </header>
+                <p class="meta">
+                    <time><i class="fa fa-clock-o"></i>{$vo.time}</time>
+                    <span class="author"><i class="fa fa-user"></i>陈帅帅</span>
+                    <span class="pv"><i class="fa fa-eye"></i>阅读({$vo.readed_sum})</span>
+                    <!--<a class="pc" href="{:url('/blog/'.$vo.id)}"><i class="fa fa-comments-o"></i>评论({$vo.comment_sum})</a>-->
+                </p>
+                <p class="note">{$vo.desc}</p>
+            </article>
+        {/volist}
+
+
+        <div style="text-align: center">
+            {$blogListPage->render()}
+        </div>
+    </div>
+
+
+    <!--共用的模块-->
+    {include file="publics/right" /}
+    <!--共用的模块-->
+</div>
+<!--左右分块 左边8 右边4-->
+</div>

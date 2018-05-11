@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{$seoInfo['desc']}">
+    <meta name="author" content="{$seoInfo['author']}">
+    <meta name="keyword" content="{$seoInfo['keywords']}">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <title>陈帅同学博客网站-{$title|default="陈帅同学博客网站"}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="__STATIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__STATIC__/css/index/main.css" rel="stylesheet">
+
+    <!--external css-->
+    <link href="__STATIC__/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="__STATIC__/js/html5shiv.js"></script>
+    <script src="__STATIC__/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<script src="__STATIC__/js/jquery.js"></script>
+<script src="__STATIC__/js/bootstrap.min.js"></script>
+<body oncontextmenu="return {$Think.config.imshuai.oncontextmen}" >
+    <div class="container">
+
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">陈帅同学</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li nav-id="index"><a href="/">首页</a></li>
+                        {volist name="cateList" id="vo"}
+                        <li nav-id="{$vo.cate}"><a href="{:url('/'.$vo.cate)}">{$vo.cate}</a></li>
+                        {/volist}
+                        <li nav-id="about"><a href="{:url('/about')}">关于我</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+
+
+
+
+
+
+
+
+
+

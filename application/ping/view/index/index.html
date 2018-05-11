@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>开始使用layui</title>
+    <link rel="stylesheet" href="__LAYUI__/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/css/main.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="__LAYUI__/layui.js"></script>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div class="layui-header">
+        <div class="layui-logo">www.imshuai.cn</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+
+    <!--菜单-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-shrink="all"  lay-filter="menu">
+                {$menu}
+            </ul>
+        </div>
+    </div>
+    <!--菜单-->
+
+    <!--内容-->
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-tab" lay-allowClose="true" lay-filter="admin-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="001">面板</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="main"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--内容-->
+
+
+
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+
+<!--<script src="__STATIC__/js/ping.js"></script>-->
+
+<script>
+    layui.use(['layer', 'form','element'], function(){
+        //var $ = layui.jquery;
+        var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element;
+
+        //存储tab对象
+        var tab_list = [];
+
+        //触发事件
+        var active = {
+            tabAdd: function(obj){
+                element.tabAdd('admin-tab', {
+                    title: obj.title //用于演示
+                    ,content:obj.content
+                    ,id: obj.id //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            ,tabDelete: function(othis){
+                //删除指定Tab项
+                element.tabDelete('demo', '444'); //删除：“商品管理”
+                //othis.addClass('layui-btn-disabled');
+            }
+            ,tabChange: function(id){
+                //切换到指定Tab项
+                element.tabChange('admin-tab', id); //切换到：用户管理
+            }
+        };
+
+        /**
+         * @点击左侧菜单 添加新的tab窗口
+         */
+        $(document).on('click','a[data-url]',function () {
+
+            console.log(11);
+            var tab_obj = {
+                title:$(this).text(),
+                id:$(this).attr('data-url'),
+                content:"<iframe src='"+$(this).attr('data-url')+"'></frame>",
+            }
+
+            //检测有没有在tab数组中
+            if(-1 == $.inArray(tab_obj.id,tab_list)){
+                console.log(22)
+                tab_list.push(tab_obj.id);
+                active.tabAdd(tab_obj);
+            }
+
+            active.tabChange(tab_obj.id);
+
+            //window.location.pathname = tab_obj.id;
+
+        })
+
+        /**
+         * @监控tab删除
+         */
+        $(document).on('click','i.layui-tab-close',function(){
+            var parent_li_id = $(this).parent('li').attr('lay-id');
+            //检测有没有在tab数组中
+            if(-1 != $.inArray(parent_li_id,tab_list)){
+                tab_list.splice($.inArray(parent_li_id,tab_list),1);
+            }
+        })
+
+    });
+</script>
+

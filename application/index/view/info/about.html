@@ -1,0 +1,27 @@
+<!--左右分块 左边8 右边4-->
+<div class="row">
+    <div class="col-lg-8 c-content-left">
+        <header class="article-header">
+            <h1 class="article-title"><a href="http://www.daqianduan.com/6142.html">{$about.title}</a></h1>
+            <div class="article-meta">
+                <span class="item">时间:{$about.time}</span>
+                <span class="item">作者:{$seoInfo['author']}</span>
+                <span class="item post-views">阅读({$about.readed_sum})</span>
+                <span class="item"></span>
+            </div>
+        </header>
+
+
+        <article class="article-content">
+            {$about.content}
+        </article>
+
+    </div>
+
+
+    <!--共用的模块-->
+    {include file="publics/right" /}
+    <!--共用的模块-->
+</div>
+<!--左右分块 左边8 右边4-->
+</div>

@@ -1,0 +1,158 @@
+<link rel="stylesheet" href="__LAYUI__/css/layui.css">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="__LAYUI__/layui.js"></script>
+
+
+<form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">博客标题</label>
+        <div class="layui-input-block">
+            <input type="hidden" name="id" id="id"   value="{$info['id']}">
+            <input type="text" name="title" id="title" placeholder="请输入" autocomplete="off" class="layui-input"  value="{$info['title']}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">博客简介</label>
+        <div class="layui-input-block">
+            <input type="text" name="desc" id="desc" placeholder="请输入" autocomplete="off" class="layui-input"  value="{$info.desc}">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">博客内容</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea" id="content" name="content">{$info['content']}</textarea>
+        </div>
+    </div>
+
+    <!--<div class="layui-form-item">
+        <label class="layui-form-label">博客图片</label>
+        <div class="layui-input-block">
+            <input type="text" name="img" id="img" placeholder="请输入" autocomplete="off" class="layui-input" value="img">
+        </div>
+    </div>-->
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">博客栏目</label>
+        <div class="layui-input-block">
+            <select name="cateid" lay-filter="cateid" id="cateid">
+
+                <!--栏目-->
+                {volist name="cateList" id="vo"}
+                <option value="{$vo.id}" {if condition="$info->getData('cateid') eq $vo.id"} selected {/if} >{$vo.cate}</option>
+                {/volist}
+                <!--栏目-->
+
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">博客类型</label>
+        <div class="layui-input-block">
+            <select name="type" lay-filter="type">
+                <option value="1" {if condition="$info->getData('type') eq 1"} selected {/if}>原创</option>
+                <option value="2" {if condition="$info->getData('type') eq 2"} selected {/if}>转载</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否置顶</label>
+        <div class="layui-input-block">
+            <input type="checkbox" lay-filter="operate" name="operate" id="operate" lay-skin="switch" lay-text="置顶|不" title="是否置顶" value="{$info.operate}"  {if condition="$info.operate eq 1"} checked {/if} >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否允许评论</label>
+        <div class="layui-input-block">
+            <input type="checkbox" title="是否允许评论" name="is_comment" lay-filter="is_comment" id="is_comment" lay-skin="switch" lay-text="允许|不"  value="{$info.is_comment}"  {if condition="$info.is_comment eq 1"} checked {/if} >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">标签</label>
+        <div class="layui-input-block">
+            <input type="text" name="tags" id="tags" placeholder="请输入标签" autocomplete="off" class="layui-input" value="{$info['tags']}">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">发布日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="time" id="time" autocomplete="off" class="layui-input" value="{$info['time']}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+</form>
+
+<script>
+    layui.use(['form', 'layedit', 'layer','laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#time'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('content',{
+            height: 500 //设置编辑器高度
+        });
+
+        //自定义验证规则
+        /*form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });*/
+
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            var edit_content = layedit.getContent(editIndex);
+            data.field.content = edit_content;
+
+            $.ajax({
+                type:'post',
+                url:'/ping/blog/save',
+                dataType:'json',
+                data:data.field,
+                success: function(result){
+                    layer.msg(result.message,{},function(){
+                        var edit_index = window.sessionStorage.getItem("edit_index");
+                        //parent.layer.close(edit_index);
+                        parent.location.reload();
+                    });
+                }
+            });
+
+
+            return false;
+        });
+
+
+    });
+</script>

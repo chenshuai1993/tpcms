@@ -1,0 +1,77 @@
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="__LAYUI__/layui.js"></script>
+<script src="__STATIC__/js/ping.js"></script>
+
+<script>
+    layui.use(['layer', 'form','element'], function(){
+        //var $ = layui.jquery;
+        var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element;
+
+        //存储tab对象
+        var tab_list = [];
+
+        //触发事件
+        var active = {
+            tabAdd: function(obj){
+                element.tabAdd('admin-tab', {
+                    title: obj.title //用于演示
+                    ,content:obj.content
+                    ,id: obj.id //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            ,tabDelete: function(othis){
+                //删除指定Tab项
+                element.tabDelete('demo', '444'); //删除：“商品管理”
+                //othis.addClass('layui-btn-disabled');
+            }
+            ,tabChange: function(id){
+                //切换到指定Tab项
+                element.tabChange('admin-tab', id); //切换到：用户管理
+            }
+        };
+
+        /**
+         * @点击左侧菜单 添加新的tab窗口
+         */
+        $(document).on('click','a[data-url]',function () {
+
+            var tab_obj = {
+                title:$(this).text(),
+                id:$(this).attr('data-url'),
+                content:"<iframe src='"+$(this).attr('data-url')+"'></frame>",
+            }
+
+            //检测有没有在tab数组中
+            if(-1 == $.inArray(tab_obj.id,tab_list)){
+                tab_list.push(tab_obj.id);
+                active.tabAdd(tab_obj);
+            }
+
+            active.tabChange(tab_obj.id);
+
+            //window.location.pathname = tab_obj.id;
+
+        })
+
+        /**
+         * @监控tab删除
+         */
+        $(document).on('click','i.layui-tab-close',function(){
+            var parent_li_id = $(this).parent('li').attr('lay-id');
+            //检测有没有在tab数组中
+            if(-1 != $.inArray(parent_li_id,tab_list)){
+                tab_list.splice($.inArray(parent_li_id,tab_list),1);
+            }
+        })
+
+    });
+</script>
+

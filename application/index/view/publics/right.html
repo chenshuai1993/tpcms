@@ -1,0 +1,47 @@
+<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 c-content-right">
+    <aside class="sidebar">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 widget widget-tops affix-top" style="top: 0px;">
+            <ul class="widget-nav">
+                <li class="active">网站公告</li>
+            </ul>
+            <ul class="widget-navcontent">
+                <li class="item item-01 active">
+                    <ul>
+                        {volist name="afficheList" id="vo"}
+                            <li><time>{$vo.time}</time><a target="_blank" href="{:url('/affiche/'.$vo.id)}">{$vo.title}</a></li>
+                        {/volist}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 widget widget_ui_textasb" style="top: 0px;">
+            <a class="style01" href="/" target="_self">
+                <strong>吐血推荐</strong>
+                <h2>这是个站位符</h2>
+                <p>这是个站位符...</p>
+            </a>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 widget widget_ui_textasb">
+            <a class="style02" href="/" target="_self">
+                <strong>吐血推荐</strong>
+                <h2>这是个站位符</h2>
+                <p>这是个站位符...</p>
+            </a>
+        </div>
+
+
+        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 widget widget_ui_tags">
+            <h3>标签云</h3>
+            <div class="items">
+                {volist name="tags" id="vo"}
+                <a href="{:url('/tags/'.$vo.id)}">{$vo.name} ({$vo.count})</a>
+                {/volist}
+
+            </div>
+        </div>
+
+    </aside>
+</div>

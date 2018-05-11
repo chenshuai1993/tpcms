@@ -1,0 +1,40 @@
+<!--左右分块 左边8 右边4-->
+<div class="row">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 c-content-left">
+        <div class="row">
+            <div class="col-lg-12">
+                <!--breadcrumbs start -->
+                <ul class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="#">{$cate}</a></li>
+                    <li><a href="{:url('/blog/'.$detaile.id)}">{$detaile.title}</a></li>
+                </ul>
+                <!--breadcrumbs end -->
+            </div>
+        </div>
+        <header class="article-header">
+            <h1 class="article-title"><a href="{:url('/blog/'.$detaile.id)}">{$detaile.title}</a></h1>
+            <div class="article-meta">
+                <span class="item"><i class="fa fa-bullhorn">{eq name="detaile.type" value="1"}:原{else/}:转{/eq}</i></span>
+                <span class="item">时间:{$detaile.time}</span>
+                <span class="item">作者:{$seoInfo['author']}</span>
+                <span class="item">分类：<a href="{:url('/blog/'.$detaile.id)}" rel="category tag">{$detaile.cateid}</a></span>
+                <span class="item post-views">阅读({$detaile.readed_sum})</span>				<!--<span class="item">评论({$detaile.comment_sum})</span>-->
+                <span class="item"></span>
+            </div>
+        </header>
+
+
+        <article class="article-content">
+            {$detaile.content}
+        </article>
+
+    </div>
+
+
+    <!--共用的模块-->
+    {include file="publics/right" /}
+    <!--共用的模块-->
+</div>
+<!--左右分块 左边8 右边4-->
+</div>
